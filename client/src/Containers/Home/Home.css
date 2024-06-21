@@ -1,0 +1,15 @@
+.home-background {
+    background: url('../../assets/back.jpg') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    color: #fff;
+  }
+  
+  .search-form .form-control {
+    margin-bottom: 1rem;
+  }
+  
+  .trending-keywords {
+    font-size: 0.9rem;
+    color: black;
+  }
