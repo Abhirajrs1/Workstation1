@@ -52,8 +52,8 @@ const recruiterController={
             res.status(400).json({success:false,message:loginResult.message})
         }else{
             const {recruiter,token}=loginResult
-            res.cookie('accessToken', token, { httpOnly: true, secure: true, maxAge: 3600000 })
-             res.status(200).json({success:true,message:"Recruiter login successfully",recruiter})
+            res.cookie('recruiteraccessToken',String(token), { httpOnly: true, maxAge: 3600000 })
+             res.status(200).json({success:true,message:"Recruiter login successfully",recruiter,token})
         }
         } catch (error) {
            res.status(500).send({message:"Internal server error"})
@@ -86,6 +86,21 @@ const recruiterController={
         } catch (error) {
             res.status(500).json({ message: "Internal server error" })
         }
-    }
+    },
+    recruiterVerified:async(req,res)=>{
+        try {
+            res.status(200).json({success:true,message:"Recruiter verified"})
+        } catch (error) {
+            res.status(500).json({ message: "Internal server error" })
+        }
+    },
+    postLogout:async(req,res)=>{
+        try {
+            res.clearCookie('recruiteraccessToken')
+            res.status(200).json({success:true,message:"Recruiter logout successfully"})
+        } catch (error) {
+            res.status(500).json({ message: "Internal server error" })
+        }
+    },
 }
 export default recruiterController

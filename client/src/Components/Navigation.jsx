@@ -30,7 +30,7 @@ function Navigation() {
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
           <Nav className="me-auto custom-font">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="#company-reviews">Company reviews</Nav.Link>
             <Nav.Link href="#salary-guide">Salary guide</Nav.Link>
           </Nav>
@@ -60,17 +60,19 @@ function Navigation() {
                 </Dropdown>
               </>
             ) : (
+              <>
               <Nav.Link 
                 onClick={() => navigate('/employee-login')} 
                 style={{ color: 'blue', fontWeight: 'bold' }}
               >
                 Login
               </Nav.Link>
+              <div className="navbar-divider"></div>
+              <Nav.Link href="/recruiter-login" className="employer-link">
+                Employers / Post Job
+              </Nav.Link>
+              </>
             )}
-            <div className="navbar-divider"></div>
-            <Nav.Link href="#employers" className="employer-link">
-              Employers / Post Job
-            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

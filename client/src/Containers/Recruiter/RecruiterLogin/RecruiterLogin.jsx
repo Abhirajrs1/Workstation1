@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import logo from '../../../assets/logo2.png'
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
 import './RecruiterLogin.css';
+import { RecruiterAuth } from '../../../Context/RecruiterContext.jsx';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors,setErrors]=useState({})
   const navigate = useNavigate();
+const {RecruiterLogin}=useContext(RecruiterAuth)
 
   axios.defaults.withCredentials = true;
 
@@ -22,54 +24,22 @@ function Login() {
     if (Object.keys(errors).length > 0) {
       return;
     }
-    try {
-      const response = await axios.post('http://localhost:3000/recruiter-login', { email, password});
-      if (response.data.success) {
-        Swal.fire({
-          title: 'Success!',
-          text: response.data.message,
-          icon: 'success',
-          timer: 5000,
-          position: 'top-center',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate('/');
-          }
-        });
-      } else {
-        console.log(response.data.message);
-        Swal.fire({
-            title: 'Error!',
-            text: response.data.message,
-            icon: 'error',
-            timer: 5000,
-            position: 'top-center',
-          });  
-          setEmail("") 
-          setPassword("")     
-      }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        console.error(error.response.data);
-        Swal.fire({
-            title: 'Error!',
-            text: error.response.data.message,
-            icon: 'error',
-            timer: 5000,
-            position: 'top-center',
-          });
-          setEmail("") 
-          setPassword("")     
-      } else {
-        console.error('An error occurred:', error);
-        Swal.fire({
-            title: 'Error!',
-            text:"An error occured.Please try again later",
-            icon: 'error',
-            timer: 5000,
-            position: 'top-center',
-          });
-    }
+    const success=await RecruiterLogin(email,password)
+    if (success) {
+      Swal.fire({
+        title: 'Success!',
+        text: "Recruiter login successfully",
+        icon: 'success',
+        timer: 5000,
+        position: 'top-center',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/recruiter-home');
+        }
+      });
+    } else {
+        setEmail("") 
+        setPassword("")     
     }
   };
 

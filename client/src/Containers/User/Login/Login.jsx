@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
 import { validateLoginForm } from '../../../Utilis/helper.js';
 import { AuthContext } from '../../../Context/UserContext.jsx';
+import google from '../../../assets/google.jpg'
 import './Login.css';
 
 function Login() {
@@ -12,7 +13,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [errors,setErrors]=useState({})
   const navigate = useNavigate();
-  const {login} =useContext(AuthContext)
+  const {login,handleGoogleCallback} =useContext(AuthContext)
 
   axios.defaults.withCredentials = true;
 
@@ -42,9 +43,13 @@ function Login() {
           setPassword("")     
       }
   };
+  const handleGoogle=()=>{
+    window.open(`http://localhost:3000/auth/google/callback`, "_self"); 
+   }
 
   return (
     <div className="login-container d-flex align-items-center justify-content-center ">
+   
       <div className="d-flex">
         <div className="banner p-4 d-flex flex-column align-items-center justify-content-center">
           <img src={logo} alt="Logo" width="300" className="mb-3" />
@@ -87,7 +92,11 @@ function Login() {
             <button type="submit" className="btn btn-primary mb-3 w-100">
               Sign In
             </button>
+
           </form>
+          <button onClick={handleGoogle} type="button" className="google-btn w-75 mb-3">
+            <img src={google} alt="Google logo" className="google-logo" />
+          </button>
           <Link to="/employee-forgotPassword" id="forgot" className="text-muted">
             Forgot Your Password?
           </Link>

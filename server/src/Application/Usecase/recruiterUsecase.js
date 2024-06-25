@@ -35,6 +35,9 @@ const recruiterUseCase={
             return {message:error.message}
         }
     },
+
+
+
     recruiterVerifyOtp:async(email,otp)=>{
         try {
             const recruiter=await recruiterRepository.findTemperoryRecruiterByEmail(email)
@@ -49,6 +52,10 @@ const recruiterUseCase={
             return {messsage:error.message}
         }
     },
+
+
+
+
     RecruiterResendOtp:async(email)=>{
         try {
             const otp=generateOTP()
@@ -60,6 +67,9 @@ const recruiterUseCase={
             return {message:error.message}
         }
     },
+
+
+
     recruiterlogin:async(recruiterData)=>{
         try {
             const {email,password}=recruiterData
@@ -71,13 +81,16 @@ const recruiterUseCase={
            if(!valid){
             return {message:"Incorrect password"}
            }
-           const token=generateJWT(recruiter.email)
+           const token=await generateJWT(recruiter.email)
            return {recruiter,token}
 
         } catch (error) {
             return {message:error.message} 
         }
     },
+
+
+
     forgotPassword:async(email)=>{
         try {
             const recruiter=await recruiterRepository.findRecruiterByEmail(email)
@@ -92,6 +105,8 @@ const recruiterUseCase={
         }
 
     },
+
+
     resetPassword:async(token,password)=>{
         try {
             const decoded=jwt.verify(token,process.env.KEY)
@@ -105,6 +120,14 @@ const recruiterUseCase={
             }
         } catch (error) {
             console.log(error);
+        }
+    },
+    getRecruiterByEmail:async(email)=>{
+        const recruiter=await recruiterRepository.findRecruiterByEmail(email)
+        if(!recruiter){
+            return {message:"Recruiter not found"}
+        }else{
+            return {recruiter}
         }
     }
 }
