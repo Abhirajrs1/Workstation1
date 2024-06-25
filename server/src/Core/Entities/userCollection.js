@@ -10,6 +10,11 @@ const UserSchema=new mongoose.Schema({
     password:{
         type:String,
     },
+    googleId: {
+        type: String, // Add googleId field to store Google user identifier
+        unique: true,
+        sparse: true,
+      },
     contact:{
         type:Number,
     },
@@ -60,12 +65,6 @@ const UserSchema=new mongoose.Schema({
             },
             level:{
                 type:String
-            },
-            startDate:{
-                type:Date
-            },
-            endDate:{
-                type:Date
             }
         },
     ],

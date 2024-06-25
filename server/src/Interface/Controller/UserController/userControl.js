@@ -1,5 +1,6 @@
 
 import userUseCase from "../../../Application/Usecase/userUsecase.js";
+import { generateJWT } from "../../../Framework/Services/jwtServices.js";
 
 const userController = {
    
@@ -130,6 +131,47 @@ const userController = {
             }
         } catch (error) {
             res.status(500).json({ message: "Internal server error" })
+        }
+    },
+    addEducation:async(req,res)=>{
+        try {
+            const {email}=req.params
+            const {education}=req.body
+            
+            const insertEducation=await userUseCase.addEducation(email,education)
+            if(insertEducation.message=="User not found"){
+                res.status(400).json({success:false,message:insertEducation.message})
+            }
+            if(insertEducation.message=="User education added successfully"){
+                res.status(200).json({success:true,message:insertEducation.message,user:insertEducation.user})
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Internal server error" })
+        }
+    },
+    addSkill:async(req,res)=>{
+        try {
+            const {email}=req.params
+            const {skill}=req.body
+            const insertSkill=await userUseCase.addSkill(email,skill)
+            if(insertSkill.message=="User not found"){
+                res.status(400).json({success:false,message:insertSkill.message})
+            }
+            if(insertSkill.message=="User skill added successfully"){
+                res.status(200).json({success:true,message:insertSkill.message,user:insertSkill.user})
+            }
+        } catch (error) {
+            
+        }
+    },
+    handlePassport:async(req,res)=>{
+        console.log(req.user);
+        if(req.user){
+            const token=await generateJWT(req.user.email)
+            res.cookie('accessToken', token, { httpOnly: true, maxAge: 3600000 });
+            return res.redirect(`http://localhost:5173/`)
+        }else{
+            res.status(401).json({ success: false, message: "Google authentication failed" });
         }
     }
 }

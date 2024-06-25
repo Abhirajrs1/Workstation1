@@ -13,6 +13,7 @@ const userRepository={
             console.log("Error occuring during",error);
         }
     },
+
     findUserByEmail:async(email)=>{
         try {
             return await User.findOne({email:email})
@@ -29,6 +30,9 @@ const userRepository={
             console.log("Error occured during",error);
         }
     },
+
+
+
     updateContact:async(email,updatedUserContact)=>{
         try {
             return await User.findOneAndUpdate({email:email},updatedUserContact,{new:true})
@@ -36,6 +40,25 @@ const userRepository={
             console.log("Error occured during",error);
         }
    },
+
+
+   addEducation:async(email,education)=>{
+      try {
+        return await User.findOneAndUpdate({email:email},{$push:{'Qualification.education':education}},{new:true})
+      } catch (error) {
+        console.log("Error occured during",error);
+      }
+   },
+
+   addSkill:async(email,skill)=>{
+    try {
+        return await User.findOneAndUpdate({email:email},{$push:{'Qualification.skills':skill}},{new:true})
+    } catch (error) {
+        console.log("Error occured during",error);
+    }
+   },
+
+
     findUserByIdAndUpdate:async(id,value)=>{
         try {
             return await User.findByIdAndUpdate({_id:id},{password:value})
@@ -43,6 +66,8 @@ const userRepository={
             console.log("Error occured during",error);
         }
     },
+
+    
     findUserById:async(userId)=>{
         try {
             return await User.findById({_id:userId})

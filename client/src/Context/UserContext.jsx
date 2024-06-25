@@ -105,9 +105,49 @@ function UserContext({children}) {
                   });
             }
            }
+           const handleGoogleCallback = async () => {
+            try {
+              const response = await axios.get('http://localhost:3000/auth/google/callback');
+              if (response.data.success) {
+                console.log(response.data);
+                setUser(response.data.user);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                Swal.fire({
+                  title: 'Success!',
+                  text: 'Google authentication successful',
+                  icon: 'success',
+                  timer: 5000,
+                  position: 'top-center',
+                });
+                return true;
+              } else {
+                Swal.fire({
+                  title: 'Error!',
+                  text: response.data.message || 'Google authentication failed',
+                  icon: 'error',
+                  timer: 5000,
+                  position: 'top-center',
+                });
+                return false;
+              }
+            } catch (error) {
+              console.error('Error during Google login callback:', error);
+              Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred during Google login',
+                icon: 'error',
+                timer: 5000,
+                position: 'top-center',
+              });
+              return false;
+            }
+          };
+        
+        
   return (
     <div>
-      <AuthContext.Provider value={{login,logout,user,setUser,isAuthenticated:!!user,loading}}>
+      <AuthContext.Provider value={{login,logout,user,setUser,isAuthenticated:!!user,loading,handleGoogleCallback}}>
             {children}
       </AuthContext.Provider>
     </div>

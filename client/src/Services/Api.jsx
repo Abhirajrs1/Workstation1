@@ -15,12 +15,17 @@ import UserContext from "../Context/UserContext";
 import Profile from "../Containers/User/Profile/Profile";
 import ContactForm from "../Containers/User/Profile/ContactForm";
 import Qualifications from "../Containers/User/Profile/Qualifiacations";
+import RecruiterHome from "../Containers/Recruiter/RecruiterHome/RecruiterHome";
+import RecruiterContext from "../Context/RecruiterContext";
+import PageNotFound from "../Components/PageNotFound";
+import JobPosting from "../Containers/Recruiter/JobPosting/JobPosting";
+import JobListing from "../Containers/Recruiter/JobListing/JobListing";
 
 function Api() {
   return (
     <>
     <UserContext>
-
+      <RecruiterContext>
       <Router>
         <Routes>
 
@@ -36,14 +41,20 @@ function Api() {
 
             
 
-
+            <Route path="/recruiter-home" element={<RecruiterHome/>}/>
             <Route path="/recruiter-signup" element={<RecruiterSignUp/>}/>
             <Route path="/recruiter-login" element={<RecruiterLogin/>}/>
             <Route path="/recruiter-verifyOtp" element={<RecruiterOtp/>}/>
             <Route path="/recruiter-forgotPassword" element={<RecruiterForgotPassword/>}/>
             <Route path="/recruiter-resetPassword/:token" element={<RecruiterResetPassword/>}/>
+            <Route path='/recruiter-postJob' element={<JobPosting/>}/>
+            <Route path="/recruiter-listJob" element={<JobListing/>}/>
+
+
+            <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </Router>
+      </RecruiterContext>
       </UserContext>
     </>
   )

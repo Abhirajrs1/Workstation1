@@ -84,7 +84,7 @@ const userAddress = user.useraddress && user.useraddress.length > 0 ? user.usera
                 <FaFileAlt style={{ fontSize: '2rem' }} />
               </Col>
               <Col xs={10}>
-                <p className="mb-0 fw-bold">Indeed Resume</p>
+                <p className="mb-0 fw-bold">Resume</p>
                 <small>Updated Jun 10, 2024 - Searchable</small>
               </Col>
             </Row>
@@ -107,7 +107,7 @@ const userAddress = user.useraddress && user.useraddress.length > 0 ? user.usera
           </Link>
         </Col>
       </Row>
-      <Row className="align-items-center mb-3">
+      {/* <Row className="align-items-center mb-3">
         <Col xs={10}>
           <p className="mb-0">Job preferences</p>
         </Col>
@@ -116,7 +116,7 @@ const userAddress = user.useraddress && user.useraddress.length > 0 ? user.usera
             <FaChevronRight />
           </Link>
         </Col>
-      </Row>
+      </Row> */}
     </Card>
   </Container>
   </div>

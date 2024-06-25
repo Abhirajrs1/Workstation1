@@ -130,6 +130,30 @@ const userUseCase={
             console.log(error);
         }
 
+    },
+    addEducation:async(email,education)=>{
+        try {
+            const user=await userRepository.addEducation(email,education)
+            if(!user){
+                return {message:"User not found"}
+            }else{
+                return {message:"User education added successfully",user}
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    addSkill:async(email,skill)=>{
+        try {
+            const user=await userRepository.addSkill(email,skill)
+            if(!user){
+                return {message:"User not found"}
+            }else{
+                return {message:"User skill added successfully",user}
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
